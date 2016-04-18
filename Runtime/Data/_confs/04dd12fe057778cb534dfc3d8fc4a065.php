@@ -1,0 +1,1 @@
+a:6:{s:8:"fontSize";i:35;s:6:"imageH";i:80;s:6:"imageW";i:300;s:8:"useCurve";b:1;s:8:"useNoise";b:1;s:6:"length";i:5;}

@@ -1,0 +1,30 @@
+<include file='Common/header'/>
+<div class="row">
+	<div class="col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-heading">推荐</div>
+			<div class="list-group">
+				<recommendlist mark='index_recommend' return='recommend'/>
+				<foreach name='recommend' item='vo'>
+					<a class="list-group-item" href="{$vo.url}">{$vo.title|mb_substr=0,15,'utf8'}</a>
+				</foreach>
+			</div>
+		</div>
+		<include file='Common/contactus'/>
+	</div>
+	<div class="col-md-9">
+		<div class="panel panel-default">
+			<articlecontent mark='gsjj' return='gsjj'/>
+			<div class="panel-heading">{$gsjj.title}</div>
+			<div class="panel-body">
+				<img src="{$gsjj.thumb|thumb=150,150}" style="float:left;margin:10px;" alt="">{$gsjj.body|htmlspecialchars_decode|mb_substr='0','500','utf8'}
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<include file='Common/link'/>
+	</div>
+</div>
+<include file='Common/footer'/>

@@ -1,0 +1,37 @@
+<include file='Common/header'/>
+<div class="row">
+	<div class="col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-heading">{$Think.config.article.title}</div>
+			<div class="list-group">
+				<articlecategory tree='1' return='categorys'/>
+				<foreach name='categorys' item='vo'>
+					<a class="list-group-item" href="{:U('Home/Article/category',array('id'=>$vo['id']))}">{$vo.title}</a>
+					<notempty name='vo.rows'>
+						<foreach name='vo.rows' item='v'>
+							<a class="list-group-item" href="{:U('Home/Article/category',array('id'=>$v['id']))}">&nbsp;&nbsp;&nbsp;&nbsp;┣{$v.title}</a>
+							<notempty name='v.rows'>
+								<foreach name='v.rows' item='s'>
+									<a class="list-group-item" href="{:U('Home/Article/category',array('id'=>$s['id']))}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;┣{$s.title}</a>
+								</foreach>
+							</notempty>
+						</foreach>
+					</notempty>
+				</foreach>
+			</div>
+		</div>
+		<include file='Common/contactus'/>
+	</div>
+	<div class="col-md-9">
+		<div class="panel panel-default">
+			<div class="panel-heading">{$Think.config.article.title}</div>
+			<div class="list-group">
+			<foreach name='lists' item='vo'>
+				<a href="{:U('Home/Article/detail',array('id'=>$vo['id']))}" class="list-group-item"><span class="badge">{$vo.update_time|date='Y-m-d H:i',###}</span>{$vo.title}</a>
+			</foreach>
+			</div>
+		</div>
+		{$pages}
+	</div>
+</div>
+<include file='Common/footer'/>

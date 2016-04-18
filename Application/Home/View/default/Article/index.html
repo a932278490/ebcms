@@ -1,0 +1,25 @@
+<include file='Common/header'/>
+<div class="row">
+	<div class="col-md-3">
+		<include file='Common/contactus'/>
+	</div>
+	<div class="col-md-9">
+		<div class="row">
+			<articlecategory pid='0' return='categorys'/>
+			<foreach name='categorys' item='category'>
+				<div class="col-md-6">
+					<div class="panel panel-default">
+						<div class="panel-heading">{$category.title}</div>
+						<div class="list-group">
+							<articlelist category_id='$category.id' level='1' limit='5' return='lists'/>
+							<foreach name='lists' item='vo'>
+								<a href="{:U('Home/Article/detail',array('id'=>$vo['id']))}" class="list-group-item"><span class="badge">{$vo.update_time|date='Y-m-d H:i',###}</span>{$vo.title}</a>
+							</foreach>
+						</div>
+					</div>
+				</div>
+			</foreach>
+		</div>
+	</div>
+</div>
+<include file='Common/footer'/>

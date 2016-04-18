@@ -1,0 +1,24 @@
+<include file='Common/header'/>
+<div class="row">
+	<div class="col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-heading"><a href="{:U('Home/Article/category',array('id'=>$category['id']))}">{$category.title}</a></div>
+			<div class="list-group">
+				<articlelist category_id='$article.category_id' limit='5' return='data'/>
+				<foreach name='data' item='vo'>
+					<a href="{:U('Home/Article/detail',array('id'=>$vo['id']))}" class="list-group-item <eq name='vo.id' value='$Think.get.id'>active</eq>">{$vo.title}</a>
+				</foreach>
+			</div>
+		</div>
+		<include file='Common/contactus'/>
+	</div>
+	<div class="col-md-9">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<h1>{$article.title}</h1><hr>
+				{$article.body|htmlspecialchars_decode}
+			</div>
+		</div>
+	</div>
+</div>
+<include file='Common/footer'/>

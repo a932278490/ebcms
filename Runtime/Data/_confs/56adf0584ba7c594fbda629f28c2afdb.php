@@ -1,0 +1,1 @@
+a:2:{s:3:"img";a:1:{s:6:"locate";s:1:"3";}s:5:"thumb";a:3:{s:6:"height";i:120;s:5:"width";i:150;s:4:"type";i:3;}}

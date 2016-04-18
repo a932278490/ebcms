@@ -1,0 +1,1 @@
+a:7:{s:8:"rootPath";s:9:"./Uploads";s:8:"savePath";s:7:"/image/";s:7:"subName";a:2:{i:0;s:4:"date";i:1;s:3:"Ymd";}s:8:"saveName";a:2:{i:0;s:6:"uniqid";i:1;s:0:"";}s:7:"autoSub";b:1;s:7:"maxSize";i:3145728;s:4:"exts";a:9:{i:0;s:3:"jpg";i:1;s:3:"gif";i:2;s:3:"png";i:3;s:4:"jpeg";i:4;s:3:"zip";i:5;s:3:"rar";i:6;s:3:"doc";i:7;s:4:"docx";i:8;s:3:"txt";}}

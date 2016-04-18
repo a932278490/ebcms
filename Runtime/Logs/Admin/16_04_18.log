@@ -1,0 +1,6 @@
+[ 2016-04-18T00:46:53+08:00 ] ::1 /ebcms/index.php?m=admin&c=api&a=verify
+ERR: Cron:clearbackuplockfile Runat 2016-04-18 00:46:53 Use 0.000570 s
+
+[ 2016-04-18T00:52:09+08:00 ] ::1 /ebcms/index.php?m=admin&c=auth&a=login
+ERR: Cron:clearbackuplockfile Runat 2016-04-18 00:52:09 Use 0.000655 s
+

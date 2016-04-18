@@ -1,0 +1,9 @@
+<div class="panel panel-default">
+	<div class="panel-heading">友情链接</div>
+	<div class="panel-body">
+		<linklist limit='10' return='link'/>
+		<foreach name="link" item="vo" >
+			&nbsp;<a href="{$vo.url}" target='_blank'>{$vo.title}</a>&nbsp;
+		</foreach>
+	</div>
+</div>

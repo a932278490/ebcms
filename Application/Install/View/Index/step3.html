@@ -1,0 +1,49 @@
+<script>
+	$(function(){
+		EBCMS.{$namespace}.go = function go(p){
+			EBCMS.ACT.formSubmit(
+				'{:U('Install/index')}',
+				p,
+				function(data){
+					if (data.status) {
+						var arr=data.info.info.split("<br>");
+						EBCMS.{$namespace}.printstr(arr,0,data.info);
+					}else{
+						$('#{$namespace}process').append('<div>'+data.info+'</div>');
+						alert(data.info);
+					};
+				}
+			);
+		};
+		EBCMS.{$namespace}.printstr = function printstr(arr,index,data){
+			$('#{$namespace}process').append('<div>'+arr[index]+'</div>');
+			if (index+1 == arr.length) {
+				if (data.process == 'end') {
+					$('#{$namespace}processbtn').show();
+					alert('安装成功！');
+				}else{
+					EBCMS.{$namespace}.go({
+						step:3,
+						process:data.process
+					});
+				};
+			}else{
+				setTimeout(function() {
+					EBCMS.{$namespace}.printstr(arr,index+1,data);
+				}, 50);
+			}
+		};
+		EBCMS.{$namespace}.go({
+			step:3,
+			process:'createdatabase',
+		});
+	});
+</script>
+<div class="license" id="{$namespace}process">
+</div>
+<div class="toolbar">
+	<div class="pull-right" id="{$namespace}processbtn" style="display:none;">
+		<a type="button" class="btn btn-primary" href="{:U('Admin/Index/index')}">进入后台</a>
+		<a type="button" class="btn btn-primary" href="{:U('Home/Index/index')}">浏览首页</a>
+	</div>
+</div>

@@ -1,0 +1,17 @@
+		<hr>
+		<div class="row">
+			<div class="col-md-12">
+				<p class="pull-right"><a href="#">Back to top</a></p>
+				<p>
+					&copy; 2014 EBtech, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">EB Terms</a>
+					<navlist mark='footer' return='navs'/>
+					<foreach name="navs" item="nav" >
+						&nbsp;&nbsp;<a href="{:U(htmlspecialchars_decode($nav['url']))}">{$nav.title}</a>&nbsp;&nbsp;
+					</foreach>
+				</p>
+			</div>
+		</div>
+	</div>
+{:htmlspecialchars_decode(mycfg('baidu_tongji'))}
+</body>
+</html>

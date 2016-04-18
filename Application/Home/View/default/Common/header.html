@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<title>{$SEO.title} - Powered by EBCMS</title>
+	<meta name="keywords" content="{$SEO.keywords}">
+	<meta name="description" content="{$SEO.description}">
+	<!-- Bootstrap -->
+	<link href="__THIRD__/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+	<!-- HTML5 Shim and Respond.js IE8 flowers of HTML5 elements and media queries -->
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	<!--[if lt IE 9]>
+	<script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+	<script src="__JS__/jquery.min.js"></script>
+	<script src="__THIRD__/bootstrap/js/bootstrap.min.js"></script>
+	<script src="__JS__/docs.min.js"></script>
+	<!-- 引入iconfont -->
+	<link href="__THIRD__/iconfont/iconfont.css" rel="stylesheet">
+	<!-- 前端公共样式 -->
+	<script src="__JS__/home.js"></script>
+	<link href="__CSS__/home.css" rel="stylesheet">
+	<script>
+		$(function(){
+			EBCMS.CONFIG.verify_URL = '{:U('Home/Api/verify')}';
+		});
+	</script>
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				<div style="padding:10px;width: 250px;">
+					<img src="__IMAGE__/logo.png">
+				</div>
+			</div>
+			<div class="col-md-8">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<nav class="navbar navbar-default">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".collapse" aria-expanded="false">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="{:U('Index/index')}">EBCMS</a>
+					</div>
+					<div class="collapse navbar-collapse">
+						<ul class="nav navbar-nav">
+						<navlist mark='main' tree='1' return='navs'/>
+						<foreach name="navs" item="nav" >
+							<empty name='nav.rows'>
+								<li><a href="{:U(htmlspecialchars_decode($nav['url']))}">{$nav.title}</a></li>
+							<else/>
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{$nav.title} <span class="caret"></span></a>
+									<ul class="dropdown-menu">
+										<foreach name="nav.rows" item="children" >
+										<li><a href="{:U(htmlspecialchars_decode($children['url']))}">{$children.title}</a></li>
+										</foreach>
+									</ul>
+								</li>
+							</empty>
+						</foreach>
+						</ul>
+						<form class="navbar-form navbar-right" action="{:U('Home/Search/index')}" method="get" role="search">
+							<div class="input-group" id="searchgroup">
+								<input type="text" name="q" class="form-control" aria-label="..." required>
+								<input type="hidden" name="m" value="Home">
+								<input type="hidden" name="c" value="Search">
+								<input type="hidden" name="a" value="index">
+								<span class="input-group-btn">
+									<button type="submit" class="btn btn-danger">搜索</button>
+								</span>
+							</div>
+						</form>
+					</div>
+				</nav>
+			</div>
+		</div>
+		<include file='Common/slide'/>
+		<div class="row">
+			<div class="col-md-12">
+				<ol class="breadcrumb">
+					当前位置：
+					<volist name=":position()" id="vo">
+						<li><a href="{:U($vo['url'])}">{$vo.title}</a></li>
+					</volist>
+				</ol>
+			</div>
+		</div>

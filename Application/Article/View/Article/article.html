@@ -1,0 +1,146 @@
+<script>
+	$(function(){
+		Namespace.register("EBCMS.[namespace]");
+		EBCMS.[namespace].queryParams = {
+			page:1,
+			rows:20,
+			sort:'sort,id',
+			order:'desc,desc',
+			__module:'Article',
+			__model:'Article',
+		};
+		EBCMS.[namespace].refresh = function refresh(p){
+			if (p) {
+				$.each(p, function(index, val) {
+					if (typeof val == 'object') {
+						EBCMS.[namespace].queryParams[index] = $.extend(EBCMS.[namespace].queryParams[index], p[index]);
+						delete p[index];
+					};
+				});
+				$.extend(EBCMS.[namespace].queryParams, p);
+			};
+			EBCMS.CORE.api({
+				queryParams:EBCMS.[namespace].queryParams,
+				tpl:'[namespace]-table',
+				target:'#[namespace]_table',
+				compileAfter:function(p){
+					$('#[namespace]_table').find('.input_sort').focus(function(){
+						EBCMS.[namespace].sortvalue = $(this).val();
+					}).blur(function(){
+						var $this = $(this);
+						if ($this.val() != EBCMS.[namespace].sortvalue) {
+							EBCMS.ACT.togglefield('{:U('Article/resort')}',$this.data('id'),$this.val(),'[namespace]','resort');
+						};
+					});
+					EBCMS.FN.renderPage({
+						namespace:'[namespace]',
+						total:p.data.total,
+						filter:{
+							lock:true,
+							status:true,
+							sort:{
+								filters:{id:'id',update_time:'更新时间',sort:'权重',create_time:'创建时间'}
+							},
+							order:true,
+							rows:true,
+						},
+					});
+				},
+			});
+		};
+		EBCMS.[namespace].save = function save(id){
+			EBCMS.CORE.get({
+				url:'{:U('Article/save')}',
+				queryParams:{
+					id:id,
+				},
+				target:'#main_edit',
+			});
+		};
+		EBCMS.[namespace].add = function add(){
+			if (EBCMS.[namespace].category_id) {
+				EBCMS.CORE.get({
+					url:'{:U('Article/add')}',
+					queryParams:{
+						category_id:EBCMS.[namespace].category_id,
+					},
+					target:'#main_edit',
+				});
+			}else{
+				EBCMS.MSG.tips('请先选择分类！');
+			};
+		};
+		EBCMS.[namespace].baidu = function baidu(id){
+			EBCMS.ACT.baidu({
+				namespace:'[namespace]',
+				id:id,
+				controller:'article',
+				action:'detail',
+			});
+		};
+	});
+</script>
+
+<div class="box" id="[namespace]_box"></div>
+<div class="box" id="[namespace]_box_edit"></div>
+
+<script id="[namespace]-box" type="text/html">
+	<div class="header">
+		<div class="btn-group pull-right" role="group" aria-label="...">
+			<a class="btn btn-success" href="javascript:EBCMS.[namespace].add()">添加</a>
+		</div>
+		<div class="header-title">文章管理</div>
+	</div>
+	<div class="body">
+		<div class="box" id="[namespace]_table"></div>
+	</div>
+	<div class="footer">
+		<div class="footer-page" id="[namespace]_page"></div>
+	</div>
+</script>
+
+<script id="[namespace]-table" type="text/html">
+	{{each rows as v n}}
+		<div class="media articlelist">
+			<div class="media-left">
+				<div class="thumbnail" style="width: 120px;">
+					<img src="{{v.thumb | realpath }}" alt="">
+				</div>
+			</div>
+			<div class="media-body">
+				<h3 class="media-heading"><b>{{v.title}}</b></h3>
+				<div class="description">{{v.description}}</div>
+				<div class="tips">ID:{{v.id}} 浏览：{{v.click}} 更新时间：{{v.update_time | unixtostr}} 收录：{{if v.baidu==1}}<i class="iconfont icon-baidu text-danger" onclick="EBCMS.[namespace].baidu('{{v.id}}');"></i>{{else}}<i class="iconfont icon-baidu" onclick="EBCMS.[namespace].baidu('{{v.id}}');"></i>{{/if}}</div>
+			</div>
+			<div class="media-right">
+				<div style="width:48px;">
+					<div class="btn-group-vertical btn-group-sm" role="group" aria-label="...">
+						{{if access(0,'[namespace]','lock')}}
+							{{if v.locked==1}}
+							<a class="btn btn-primary" href="javascript:EBCMS.ACT.lock('{:U('Article/lock')}','{{v.id}}','0','[namespace]');">已锁</a>
+							{{else}}
+							<a class="btn btn-primary" href="javascript:EBCMS.ACT.lock('{:U('Article/lock')}','{{v.id}}','1','[namespace]');">未锁</a>
+							{{/if}}
+						{{/if}}
+						{{if access(v.locked,'[namespace]','status')}}
+							{{if v.status==1}}
+							<a class="btn btn-primary" href="javascript:EBCMS.ACT.status('{:U('Article/status')}','{{v.id}}','0','[namespace]');">已审</a>
+							{{else}}
+							<a class="btn btn-primary" href="javascript:EBCMS.ACT.status('{:U('Article/status')}','{{v.id}}','1','[namespace]');">未审</a>
+							{{/if}}
+						{{/if}}
+						{{if access(v.locked,'[namespace]','save')}}
+						<a class="btn btn-primary" href="javascript:EBCMS.[namespace].save('{{v.id}}');">编辑</a>
+						{{/if}}
+						{{if access(v.locked,'[namespace]','delete')}}
+						<a class="btn btn-primary" href="javascript:EBCMS.ACT.del('{:U('Article/delete')}','{{v.id}}','[namespace]');">删除</a>
+						{{/if}}
+						{{if access(0,'admin_recommend','push')}}
+						<a class="btn btn-primary" href="javascript:EBCMS.CORE.recommend('article','{{v.id}}');" role="button">推送</a>
+						{{/if}}
+					</div>
+				</div>
+			</div>
+		</div>
+	{{/each}}
+</script>

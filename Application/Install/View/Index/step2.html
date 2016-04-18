@@ -1,0 +1,102 @@
+<script>
+	$(function(){
+		EBCMS.{$namespace}.createdatabase = function createdatabase(){
+			 if($("#createdatabase").is(':checked')==true){
+			 	$('.createdatabase').fadeIn('slow');
+			 }else{
+			 	$('.createdatabase').hide();
+			 }
+		};
+		EBCMS.{$namespace}.gotostep3 = function gotostep3(){
+			$.ajax({
+				url: '{:U('index')}',
+				type: 'POST',
+				dataType: 'JSON',
+				data: $('#{$namespace}Form').serialize(),
+				success:function(data){
+					if (data.status) {
+						EBCMS.{$namespace}.step('3');
+					}else{
+						alert(data.info);
+					};
+				},
+				error:function(XMLHttpRequest, textStatus, errorThrown){
+					alert('您的数据库配置不正确！请重新填写！');
+				}
+			});
+		};
+	});
+</script>
+<form id="{$namespace}Form">
+	<div class="license">
+		<div class="form-group">
+			<div class="input-group">
+				<div class="input-group-addon">数据库地址:</div>
+				<input type="text" name="DB_HOST" value="127.0.0.1" class="form-control" id="DB_HOST" placeholder="DB_HOST">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+				<div class="input-group-addon">数据库名称:</div>
+				<input type="text" name="DB_NAME" value="" class="form-control" id="DB_NAME" placeholder="DB_NAME">
+			</div>
+		</div>
+		<div class="form-group createdatabase">
+			<div class="input-group">
+				<div class="input-group-addon">ROOT账户:</div>
+				<input type="text" name="DB_USER_ROOT" value="root" class="form-control" id="DB_USER_ROOT" placeholder="DB_USER_ROOT">
+			</div>
+		</div>
+		<div class="form-group createdatabase">
+			<div class="input-group">
+				<div class="input-group-addon">ROOT密码:</div>
+				<input type="text" name="DB_PWD_ROOT" value="root" class="form-control" id="DB_PWD_ROOT" placeholder="DB_PWD_ROOT">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+				<div class="input-group-addon">数据库账户:</div>
+				<input type="text" name="DB_USER" value="root" class="form-control" id="DB_USER" placeholder="DB_USER">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+				<div class="input-group-addon">数据库密码:</div>
+				<input type="text" name="DB_PWD" value="root" class="form-control" id="DB_PWD" placeholder="DB_PWD">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+				<div class="input-group-addon">数据表前缀:</div>
+				<input type="text" name="DB_PREFIX" value="ebcms_" class="form-control" id="DB_PREFIX" placeholder="DB_PREFIX">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+				<div class="input-group-addon">邮<span style="color:#eee;">一一一</span>箱:</div>
+				<input type="text" name="email" class="form-control" id="email" placeholder="电子邮箱">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+				<div class="input-group-addon">密<span style="color:#eee;">一一一</span>码:</div>
+				<input type="text" name="password" class="form-control" id="password" placeholder="密码">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+				<div class="input-group-addon">确认<span style="color:#eee;">一</span>密码:</div>
+				<input type="text" name="password2" class="form-control" id="password2" placeholder="再次输入密码">
+			</div>
+		</div>
+		<input type="hidden" name="step" value="2">
+	</div>
+	<div class="toolbar">
+		<div class="pull-right">
+			<button type="button" class="btn btn-primary" onclick="EBCMS.{$namespace}.step(1);">上一步</button>
+			<button type="button" class="btn btn-primary" onclick="EBCMS.{$namespace}.gotostep3();">下一步</button>
+		</div>
+		<span onchange="EBCMS.{$namespace}.createdatabase();"><label for="createdatabase" onclick="EBCMS.{$namespace}.createdatabase();"><input type="checkbox" name="createdatabase" value='1' id="createdatabase"/>创建数据库</label></span>&nbsp;&nbsp;&nbsp;
+		<input type="radio" name="demodatabase" value='1' id="demodatabase1" checked="checked"/><label for="demodatabase1">安装演示数据</label><input type="radio" name="demodatabase" value='0' id="demodatabase0"/><label for="demodatabase0">安装纯净版</label>
+	</div>
+</form>
